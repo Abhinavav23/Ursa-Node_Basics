@@ -104,9 +104,18 @@ deleteFile();
 // })()
 
 
+// const myFileWriter = (filename, content) => {
+//   fs.writeFile(filename, content, (err) => {
+//     if(err)
+//     console.log(err);
+//   })
+// }
 
 
-
+// const myFileReader = async(filename) => {
+//   const fileContent = await fsPromise.readFile(filename)
+//   return fileContent.toString()
+// }
 
 
 
