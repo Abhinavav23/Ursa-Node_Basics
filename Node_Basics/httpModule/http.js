@@ -9,6 +9,9 @@ const server = http.createServer((req, res) => {
     }else if(req.url === '/home'){
         res.end('<h2>Home Page</h2>')
     }else if(req.url === '/login'){
+        // first check gthe usernin DB
+        // if passed then check the password
+        // if passed then move the user to home page
         res.end('<h2>Login Page</h2>')
     }else{
         res.end('sending Response');
@@ -37,6 +40,6 @@ server.listen(PORT, () => {
 
 // const res = calculate(10,40)
 
-fetch('http:localhost/3000', {
-    method: "POST"
-})
+// fetch('http:localhost/3000', {
+//     method: "POST"
+// })
