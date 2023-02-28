@@ -2,6 +2,12 @@ const express = require("express");
 
 const app = express();
 
+// to get the data from client where body is in form of json
+app.use(express.json());
+
+// to get the data from a form which will have the format as urlencoded
+// app.use(express.urlencoded());
+
 const product = [
   {
     id: 1,
@@ -83,7 +89,55 @@ app.get("/products", (req, res) => {
         const productList = product.filter((prd) => prd.price === Number(price));
         res.send(productList);
     }
+    // refactor this logic
+    res.send(product);
 });
+
+app.post("/products", (req, res) => {
+    console.log('data in body', req.body);
+    // data wont be persisted as we are storing the data in a variable
+    product.push(req.body)
+    res.send(product);
+})
+
+// put and patch are update operations
+// put --> which we use to update the whole data by replacing the whole content
+// put will create a new data or element if the updating element not found
+
+app.put('/products/:id', (req, res) => {
+    console.log('params in put req', req.params);
+    console.log('updates value', req.body);
+    // product.forEach((el, index) => {
+    //     if(el.id === Number(req.params.id)){
+    //         product[index] = req.body
+    //     }
+    // })
+
+    // find index of the element
+    const elementIndex = product.findIndex((el) => el.id === Number(req.params.id));
+    // update the element at that index
+    product[elementIndex] = req.body
+    res.send(product);
+})
+
+// patch --> updates the only value passed in request data
+app.patch('/products/:id', (req, res) => {
+    console.log('params in put req', req.params);
+    console.log('updates value', req.body);
+    // find the index of element
+
+    // update the only key in the element
+
+})
+
+app.delete('/products/:id', () => {
+    console.log('params in delete req', req.params);
+    
+    // find the element using req.params and delete it
+
+})
+
+
 
 app.get("*", (req, res) => {
   console.log("not found page");
@@ -91,7 +145,6 @@ app.get("*", (req, res) => {
 });
 
 const PORT = 5500;
-
 
 app.listen(PORT, () => {
   console.log(`express server running at ${PORT}`);
@@ -128,3 +181,53 @@ app.listen(PORT, () => {
 // })
 
 // axios.post('https://myapi.com', userInfo)
+
+
+{/* <form action="https://myapi.com" method="POST">
+    <input name="username"/>
+    <input name="password"/>
+    <input type="submit"/>
+</form>
+
+{
+    username: 'abhinav',
+    password: '12345'
+} */}
+
+// fetch("https://myapi.com", {
+//     method: "post",
+//     body: JSON.stringify()
+// })
+// .then((resp) => {
+//     return resp.json()
+// })
+
+// assignments
+app.post('/divide', (req, res) => {
+    const {num1, num2} = req.body
+    // check the types of num1 and num2
+    // send response accordingly
+    
+    // check if the values of num1 and num2 are more than 10 lakhs
+    // or value of sum is more than 10 lakhs 
+    // message should be "overflow"
+    
+
+    // check if the values of num1 and num2 are less than 10 lakhs
+    // or value of res is less than 10 lakhs 
+    // message should be "underflow"
+
+    if(num2 === 0){
+        res.send({
+            status: 'error',
+            message: "Cannot divide by zero"
+        })
+    }else{
+        res.send({
+            status: "success",
+            message: "The division of given numbers",
+            result: num1/num2
+        })
+    }
+})
+
