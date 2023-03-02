@@ -44,10 +44,10 @@ app.get("/", (req, res) => {
   res.send("<h2>Default page GET</h2>");
 });
 
-app.post("/", (req, res) =>{
-    console.log("post endpoint");
-    res.send("<h2>Default page POST</h2>");
-})
+app.post("/", (req, res) => {
+  console.log("post endpoint");
+  res.send("<h2>Default page POST</h2>");
+});
 
 app.get("/login", (req, res) => {
   console.log("method", req.method);
@@ -66,78 +66,87 @@ app.get("/data", (req, res) => {
 
 app.get("/products/:productId", (req, res) => {
   console.log("params", req.params);
-  const productItem = product.find((prd) => prd.id === Number(req.params.productId));
-    console.log('productItem', productItem);
-    if(productItem){
-        res.send(productItem)
-    }else{
-        res.send({})
-    }
+  const productItem = product.find(
+    (prd) => prd.id === Number(req.params.productId)
+  );
+  console.log("productItem", productItem);
+  if (productItem) {
+    res.send(productItem);
+  } else {
+    res.send({});
+  }
 });
 
 app.get("/products", (req, res) => {
-    console.log('query', req.query);
-    const {category, price} = req.query;
-    console.log('category', category);
-    console.log('price', price);
+  console.log("query", req.query);
+  const { category, price } = req.query;
+  console.log("category", category);
+  console.log("price", price);
 
-    if(category){
-        const productList = product.filter((prd) => prd.category === category);
-        res.send(productList);
-    }
-    if(price){
-        const productList = product.filter((prd) => prd.price === Number(price));
-        res.send(productList);
-    }
-    // refactor this logic
-    res.send(product);
+  if (category) {
+    const productList = product.filter((prd) => prd.category === category);
+    res.send(productList);
+  }
+  if (price) {
+    const productList = product.filter((prd) => prd.price === Number(price));
+    res.send(productList);
+  }
+  // refactor this logic
+  res.send(product);
 });
 
 app.post("/products", (req, res) => {
-    console.log('data in body', req.body);
-    // data wont be persisted as we are storing the data in a variable
-    product.push(req.body)
-    res.send(product);
-})
+  console.log("data in body", req.body);
+  // data wont be persisted as we are storing the data in a variable
+  product.push(req.body);
+  res.send(product);
+});
 
 // put and patch are update operations
 // put --> which we use to update the whole data by replacing the whole content
 // put will create a new data or element if the updating element not found
 
-app.put('/products/:id', (req, res) => {
-    console.log('params in put req', req.params);
-    console.log('updates value', req.body);
-    // product.forEach((el, index) => {
-    //     if(el.id === Number(req.params.id)){
-    //         product[index] = req.body
-    //     }
-    // })
+app.put("/products/:id", (req, res) => {
+  console.log("params in put req", req.params);
+  console.log("updates value", req.body);
+  // product.forEach((el, index) => {
+  //     if(el.id === Number(req.params.id)){
+  //         product[index] = req.body
+  //     }
+  // })
 
-    // find index of the element
-    const elementIndex = product.findIndex((el) => el.id === Number(req.params.id));
-    // update the element at that index
-    product[elementIndex] = req.body
-    res.send(product);
-})
+  // find index of the element
+  const elementIndex = product.findIndex(
+    (el) => el.id === Number(req.params.id)
+  );
+  // update the element at that index
+  product[elementIndex] = req.body;
+  res.send(product);
+});
 
 // patch --> updates the only value passed in request data
-app.patch('/products/:id', (req, res) => {
-    console.log('params in put req', req.params);
-    console.log('updates value', req.body);
-    // find the index of element
+app.patch("/products/:id", (req, res) => {
+  console.log("params in put req", req.params);
+  console.log("updates value", req.body);
+  // find the index of element
+  const elementIndex = product.findIndex(
+    (el) => el.id === Number(req.params.id)
+  );
+  // update the only key in the element
+  if (elementIndex !== -1)
+    product[elementIndex] = { ...product[elementIndex], ...req.body };
+  res.send(product);
+});
 
-    // update the only key in the element
-
-})
-
-app.delete('/products/:id', () => {
-    console.log('params in delete req', req.params);
-    
-    // find the element using req.params and delete it
-
-})
-
-
+app.delete("/products/:id", (req, res) => {
+  console.log("params in delete req", req.params);
+  // find the element using req.params and delete it
+  const elementIndex = product.findIndex(
+    (el) => el.id === Number(req.params.id)
+  );
+  if (elementIndex !== -1) product.splice(elementIndex, 1);
+  res.send(product);
+});
 
 app.get("*", (req, res) => {
   console.log("not found page");
@@ -154,11 +163,9 @@ app.listen(PORT, () => {
 // http://localhost:5500/coments
 // http://localhost:5500/cart
 
-
-
 // try this
 // http://localhost:5500/products?price=20000&category=mobile
-// result should be 
+// result should be
 // {id: 2,
 //     name: "galaxy",
 //     category: "Mobile",
@@ -168,7 +175,6 @@ app.listen(PORT, () => {
 
 // http://localhost:5500/products
 // should return all products
-
 
 // const userInfo = {
 //     username: 'abhinav',
@@ -182,8 +188,8 @@ app.listen(PORT, () => {
 
 // axios.post('https://myapi.com', userInfo)
 
-
-{/* <form action="https://myapi.com" method="POST">
+{
+  /* <form action="https://myapi.com" method="POST">
     <input name="username"/>
     <input name="password"/>
     <input type="submit"/>
@@ -192,7 +198,8 @@ app.listen(PORT, () => {
 {
     username: 'abhinav',
     password: '12345'
-} */}
+} */
+}
 
 // fetch("https://myapi.com", {
 //     method: "post",
@@ -202,32 +209,31 @@ app.listen(PORT, () => {
 //     return resp.json()
 // })
 
+
 // assignments
-app.post('/divide', (req, res) => {
-    const {num1, num2} = req.body
-    // check the types of num1 and num2
-    // send response accordingly
-    
-    // check if the values of num1 and num2 are more than 10 lakhs
-    // or value of sum is more than 10 lakhs 
-    // message should be "overflow"
-    
+// app.post("/divide", (req, res) => {
+//   const { num1, num2 } = req.body;
+//   // check the types of num1 and num2
+//   // send response accordingly
 
-    // check if the values of num1 and num2 are less than 10 lakhs
-    // or value of res is less than 10 lakhs 
-    // message should be "underflow"
+//   // check if the values of num1 and num2 are more than 10 lakhs
+//   // or value of sum is more than 10 lakhs
+//   // message should be "overflow"
 
-    if(num2 === 0){
-        res.send({
-            status: 'error',
-            message: "Cannot divide by zero"
-        })
-    }else{
-        res.send({
-            status: "success",
-            message: "The division of given numbers",
-            result: num1/num2
-        })
-    }
-})
+//   // check if the values of num1 and num2 are less than 10 lakhs
+//   // or value of res is less than 10 lakhs
+//   // message should be "underflow"
 
+//   if (num2 === 0) {
+//     res.send({
+//       status: "error",
+//       message: "Cannot divide by zero",
+//     });
+//   } else {
+//     res.send({
+//       status: "success",
+//       message: "The division of given numbers",
+//       result: num1 / num2,
+//     });
+//   }
+// });
