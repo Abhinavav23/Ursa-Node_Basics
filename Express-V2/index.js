@@ -11,7 +11,7 @@ const userRouter = require('./routes/userRoutes');
 
 const {checkLogInStatus, checkUser} = require('./middleware');
 
-app.use('/products', productRouter);
+app.use('/product', productRouter);
 app.use('/', userRouter);
 
 // app.use(checkUser);

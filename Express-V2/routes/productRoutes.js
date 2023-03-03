@@ -1,37 +1,14 @@
-const express = require('express');
+const express = require("express");
 
 const router = express.Router();
 
-const products = [
-    {
-      id: 1,
-      name: "iphone 13",
-      category: "Mobile",
-      price: 50000,
-      color: "black",
-    },
-    {
-      id: 2,
-      name: "galaxy",
-      category: "Mobile",
-      price: 20000,
-      color: "white",
-    },
-    {
-      id: 3,
-      name: "fridge",
-      category: "appliances",
-      price: 20000,
-      color: "green",
-    },
-    {
-      id: 4,
-      name: "cooler",
-      category: "appliances",
-      price: 25000,
-      color: "gray",
-    },
-  ];
+const {
+  getAllProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} = require("../controllers/productController");
+
 // http://localhost/8000/product/
 
 // router.get('/', (req, res) => {
@@ -42,25 +19,19 @@ const products = [
 //     res.send(products)
 // })
 
-router.route('/')
-.get((req, res) => {
-    res.send(products)
-})
-.post((req, res) => {
-    console.log('req.body', req.body);
-    products.push(req.body)
-    res.send(products)
-})
+router.route("/").get(getAllProducts).post(createProduct);
 
-router.get('/mobile', (req, res) => {
-    res.send('all mobile product list');
-})
+router.route("/:id").patch(updateProduct).delete(deleteProduct);
 
-router.get('/cloth', (req, res) => {
-    res.send('cloths list');
-})
+// router.get('/mobile', (req, res) => {
+//     res.send('all mobile product list');
+// })
 
-module.exports = router
+// router.get('/cloth', (req, res) => {
+//     res.send('cloths list');
+// })
+
+module.exports = router;
 
 // const a = 10
 // const b =20

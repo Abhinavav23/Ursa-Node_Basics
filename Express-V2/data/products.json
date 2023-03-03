@@ -1,0 +1,32 @@
+{
+   "productList": [
+      {
+         "id": 1,
+         "name": "iphone 13",
+         "category": "Mobile",
+         "price": 50000,
+         "color": "black"
+      },
+      {
+         "id": 2,
+         "name": "Cooler",
+         "category": "appliances",
+         "price": 25000,
+         "color": "green"
+      },
+      {
+         "id": 3,
+         "name": "TV",
+         "category": "appliances",
+         "price": 50000,
+         "color": "silver"
+      },
+      {
+         "id": 4,
+         "name": "Iphone 14",
+         "category": "appliances",
+         "price": 85000,
+         "color": "silver"
+      }
+   ]
+}
