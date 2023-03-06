@@ -4,6 +4,8 @@ dotenv.config();
 const app = express();
 const userRoute = require("./src/routes/userRoutes");
 
+app.use(express.json());
+
 require('./connectDb');
 app.use("/user", userRoute);
 
