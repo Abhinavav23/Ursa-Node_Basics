@@ -3,7 +3,10 @@ const {
   getAllUsers,
   createUser,
   getUserByEmail,
-  getUserByAge
+  getUserByAge,
+  createMultiplePlayers,
+  getPlayers,
+  updatePlayer
 } = require("../controllers/userController");
 
 const router = express.Router();
@@ -12,7 +15,13 @@ const router = express.Router();
 router.get("/all", getAllUsers);
 router.get("/", getUserByAge);
 router.post("/", createUser);
-router.get("/:email", getUserByEmail);
+// router.get("/:email", getUserByEmail);
+
+
+// player routes
+router.post('/player', createMultiplePlayers)
+router.get('/player', getPlayers);
+router.patch('/player/:id', updatePlayer);
 
 
 module.exports = router;
