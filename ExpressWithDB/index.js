@@ -1,11 +1,19 @@
 const express = require("express");
-const {getUserList} = require("./src/controllers/userController");
-
 const app = express();
 
+const userRouter = require('./src/routes/userRoutes');
+app.use(express.json());
 // http://localhost/5800
+app.use('/user', userRouter);
+require('./dbConnection')
+// product
+// app.get('/product', () => {
 
-app.get('/user', getUserList)
+// })
+// app.get('/product/clothing', () => {
+
+// })
+
 
 
 const PORT = 5800
