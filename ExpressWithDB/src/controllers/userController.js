@@ -128,13 +128,30 @@ const getUser = (req, res) => {
   //   res.send(data)
   // })
 
-  UserModel.find({ $nor: [{ age: 25 }, { name: "Student1" }] })
-    .select({ name: 1, age: 1 })
-    .skip(3)
-    // UserModel.find().select({email:1})
-    .then((data) => {
-      res.send(data);
-    });
+  // UserModel.find({ $nor: [{ age: 25 }, { name: "Student1" }] })
+  //   .select({ name: 1, age: 1 })
+  //   .skip(3)
+  //   // UserModel.find().select({email:1})
+  //   .then((data) => {
+  //     res.send(data);
+  //   });
+
+  // UserModel.find({email: {$regex: /4@Mail$/, $options: "i"}})
+  // .then((data) => {
+  //   res.send(data)
+  // })
+
+  const {limit, page} = req.query
+
+  UserModel.paginate({email: {$regex: /4@Mail$/, $options: "i"}}, {limit: 3, page: 1})
+  .then((data) => {
+    console.log(data);
+    res.send(data)
+  })
+
+  // task --> try on your own
+  // pagination using limit and skip
+
 };
 
 const createUser = (req, res) => {
@@ -193,6 +210,35 @@ const updateUser = (req, res) => {
   });
 };
 
+const deleteUser = async (req, res) => {
+  console.log("params", req.params);
+  const { id } = req.params;
+  // UserModel.findByIdAndDelete(id)
+  // .then((data) => {
+  //   res.send(data)
+  // });
+  
+  // task
+  // UserModel.findOneAndDelete({email: 'Student3@mail'})
+
+
+  // try {
+  //   const result = await UserModel.deleteOne({ email: "Student3@mail" });
+  //   console.log(result);
+  //   res.send("user deleted successfully");
+  // } catch (err) {
+  //   res.send("something went wrong!!");
+  // }
+
+  try {
+    const result = await UserModel.deleteMany({ age: 25 });
+    console.log(result);
+    res.send("user deleted successfully");
+  } catch (err) {
+    res.send("something went wrong!!");
+  }
+};
+
 module.exports = {
   getUserList,
   createUser,
@@ -200,4 +246,5 @@ module.exports = {
   getUserOrders,
   getUser,
   updateUser,
+  deleteUser,
 };
