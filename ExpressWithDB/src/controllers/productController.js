@@ -10,7 +10,7 @@ const getProducts = (req, res) => {
 const createProduct = (req, res) => {
     ProductModel.create(req.body)
     .then((data) => {
-        console.log('data', data);
+        // console.log('data', data);
         res.send('product created successfully');
     })
     .catch((err) => {
