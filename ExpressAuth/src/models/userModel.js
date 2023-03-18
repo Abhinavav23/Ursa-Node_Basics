@@ -28,6 +28,11 @@ const userSchema = new Schema(
       type: String,
       enum: ["Ursa", "Juno"],
     },
+    role: {
+      type: String,
+      default: "user",
+      enum: ["user", "admin", "superAdmin"]
+    }
   },
   { versionKey: false }
 );
