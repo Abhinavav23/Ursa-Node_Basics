@@ -16,7 +16,9 @@ const auth = (req, res, next) => {
       res.send(err);
     }
   } else {
-    res.send("you have to log in first !!");
+    res.json({
+      err: 'you have to login first!!'
+    });
   }
 };
 
